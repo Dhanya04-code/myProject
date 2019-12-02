@@ -130,7 +130,15 @@ STATICFILES_DIRS = (
     STATIC_PATH,
 )
 
-# REST_FRAMEWORK = {
+REST_FRAMEWORK = {
+    'DATETIME_FORMAT': "%d/%m/%Y",
+    'DEFAULT_PERMISSION_CLASSES': {
+        'rest_framework.permissions.IsAuthenticated'
+    }
+}
 
-#     'DATETIME_FORMAT': "%d/%m/%Y",
-# }
+# CELERY SETTINGS
+BROKER_URL = 'redis://localhost:6379'
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'

@@ -20,21 +20,75 @@ def task_details(request, pk):
 
 
 class taskListAPIView(APIView):
-    queryset = Task.objects.all()
-    serializer_class = TaskListSerializer
+    def get(self, request):
+        tasks = Task.objects.filter(is_active=True)
+        serializer = TaskListSerializer(tasks, many=True)
+        return Response(serializer.data, status=200)
 
-class taskDetailAPIView(generics.RetrieveAPIView):
-    queryset = Task.objects.all()
-    serializer_class = TaskSerializer
 
-class taskUpdateAPIView(generics.UpdateAPIView):
-    queryset = Task.objects.all()
-    serializer_class = TaskSerializer
+class taskDetailAPIView(APIView):
+    def get_object(self, pk):
+        try:
+            return Task.objects.get(pk=pk, is_active=True)
+        except Task.DoesNotExist:
+            raise Http404
 
-class taskDestroyAPIView(generics.DestroyAPIView):
-    queryset = Task.objects.all()
-    serializer_class = TaskSerializer
+    def get(self, request, pk):
+        task = self.get_object(pk)
+        task = TaskSerializer(task)
+        return Response(task.data)
 
-class taskCreateAPIView(generics.CreateAPIView):
-    queryset = Task.objects.all()
-    serializer_class = TaskSerializer
+
+class taskUpdateAPIView(APIView):
+    def get_object(self, pk):
+        try:
+            return Task.objects.get(pk=pk, is_active=True)
+        except Task.DoesNotExist:
+            raise Http404
+
+    def post(self, request, pk):
+        task = self.get_object(pk)
+        serializer = TaskSerializer(task, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=200)
+        return Response(serializer.errors, status=404)
+
+
+class taskDestroyAPIView(APIView):
+    def get_object(self, pk):
+        try:
+            return Task.objects.get(pk=pk, is_active=True)
+        except Task.DoesNotExist:
+            raise Http404
+
+    def post(self, request, pk):
+        task = self.get_object(pk)
+        task.is_active = False
+        task.save()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+class taskCreateAPIView(APIView):
+    def post(self, request):
+        serializer = TaskSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=200)
+        return Response(serializer.errors, status=400)
+
+# class taskDetailAPIView(generics.RetrieveAPIView):
+#     queryset = Task.objects.all()
+#     serializer_class = TaskSerializer
+
+# class taskUpdateAPIView(generics.UpdateAPIView):
+#     queryset = Task.objects.all()
+#     serializer_class = TaskSerializer
+
+# class taskDestroyAPIView(generics.DestroyAPIView):
+#     queryset = Task.objects.all()
+#     serializer_class = TaskSerializer
+
+# class taskCreateAPIView(generics.CreateAPIView):
+#     queryset = Task.objects.all()
+#     serializer_class = TaskSerializer

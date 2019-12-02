@@ -8,7 +8,7 @@
   EMP.getEmployeeDetails = function(){
     $.ajax({
       method: 'GET',
-      url: '/api/employee/details/'+EMP.id(),
+      url: '/employee/api/details/'+EMP.id(),
     })
     .done( function (d, textStatus, jqXHR) {
       EMP.firstname(d.firstname);
@@ -25,8 +25,8 @@
     formdata.append('firstname', EMP.firstname());
     formdata.append('lastname', EMP.lastname());
     $.ajax({
-      method: 'PUT',
-      url: '/api/employee/edit/'+EMP.id(),
+      method: 'POST',
+      url: '/employee/api/edit/'+EMP.id(),
       data: formdata,
       contentType: false,
       processData: false,
@@ -41,11 +41,11 @@
 
   EMP.deleteEmployee = function(data, e){
     $.ajax({
-      method: 'DELETE',
-      url: '/api/employee/delete/'+EMP.id(),
+      method: 'POST',
+      url: '/employee/api/delete/'+EMP.id(),
     })
     .done( function (d, textStatus, jqXHR) {
-      window.location = '/employees'
+      window.location = '/employee'
     })
     .fail( function (jqXHR, textStatus, errorThrown) {
       alert(jqXHR.responseText);

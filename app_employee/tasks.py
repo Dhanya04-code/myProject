@@ -10,7 +10,7 @@ from app_employee.models import *
 
 
 @periodic_task(
-    run_every=(crontab(minute=46, hour=22)),
+    run_every=(crontab(minute=25, hour=20)),
     # run_every=(crontab(minute=46, hour=22, day_of_week=5)),
     name="task_status",
     ignore_result=True
@@ -22,8 +22,8 @@ def task_status():
         week_end = week_start + timedelta(days=6)
 
         filename = "media/documents/Task_Status_Export"+ str(datetime.now().date()) + ".csv"
-        tasks = Task.objects.select_related('assignee').filter(Q(start_date__date__gte=week_start.date())|Q(end_date__date__lte=week_end))
-
+        # tasks = Task.objects.select_related('assignee').filter(Q(start_date__date__gte=week_start.date())|Q(end_date__date__lte=week_end))
+        tasks = Task.objects.all()
         with open(filename, 'w') as writeFile:
             writer = csv.writer(writeFile)
             writer.writerow(['Sl No', 'Task Name', 'Assignee', 'Start Date', 'End Date', 'Status'])

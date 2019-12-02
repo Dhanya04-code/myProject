@@ -73,8 +73,8 @@ class UserLoginSerializer(serializers.ModelSerializer):
             if not user_obj.check_password(password):
                 raise ValidationError("Incorrect credentials, please try again.")
 
-        string_chars = string.ascii_lowercase + string.ascii_uppercase + string.digits
-        token_text = ''.join(random.choice(string_chars) for _ in range(50))
-        data['token'] = token_text
+        # string_chars = string.ascii_lowercase + string.ascii_uppercase + string.digits
+        # token_text = ''.join(random.choice(string_chars) for _ in range(50))
+        # data['token'] = token_text
 
         return data

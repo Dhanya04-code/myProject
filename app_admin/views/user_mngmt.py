@@ -4,6 +4,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status, generics, permissions
 from django.contrib.auth.models import User
+from django.contrib.auth import login
 from app_admin.serializers import *
 
 def login_page(request):

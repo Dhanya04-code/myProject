@@ -10,7 +10,7 @@
   EMP.getEmployeesList = function(){
     $.ajax({
       method: 'GET',
-      url: '/api/employees/list',
+      url: '/employee/api/list',
     })
     .done( function (d, textStatus, jqXHR) {
       EMP.employees_list([]);
@@ -35,13 +35,13 @@
     formdata.append('end_date', EMP.end_date());
     $.ajax({
       method: 'POST',
-      url: '/api/task/create',
+      url: '/employee/api/task/create',
       data: formdata,
       contentType: false,
       processData: false,
     })
     .done( function (d, textStatus, jqXHR) {
-      window.location='/tasks';
+      window.location='/employee/tasks';
     })
     .fail( function (jqXHR, textStatus, errorThrown) {
       alert(jqXHR.responseText);

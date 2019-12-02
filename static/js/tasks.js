@@ -5,7 +5,7 @@
   EMP.getTasksList = function(){
     $.ajax({
       method: 'GET',
-      url: '/api/tasks/list',
+      url: '/employee/api/tasks/list',
     })
     .done( function (d, textStatus, jqXHR) {
       EMP.tasks_list([]);
@@ -19,11 +19,11 @@
   }
 
   EMP.createTask = function(){
-    window.open('/task/create');
+    window.open('/employee/task/create');
   }
 
   EMP.getDetails = function(data, e){
-    window.open('/task/details/'+data.id);
+    window.open('/employee/task/details/'+data.id);
   }
             
 })(this);

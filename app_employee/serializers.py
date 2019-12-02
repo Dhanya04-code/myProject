@@ -14,14 +14,11 @@ class EmployeeUpdateSerializer(serializers.ModelSerializer):
 
 
 class TaskListSerializer(serializers.ModelSerializer):
-    start_date = serializers.DateTimeField(format=["%d/%m/%Y"])
-    end_date = serializers.DateTimeField(format=["%d/%m/%Y"])
-    assignee_name = serializers.CharField(source='assignee.firstname')
+    assignee = serializers.CharField(source='assignee.firstname')
 
     class Meta:
         model = Task
-        # depth=1
-        fields = ['id','taskname','assignee_name','start_date','end_date','status']
+        fields = ['id','taskname','assignee','start_date','end_date','status']
 
 
 class TaskSerializer(serializers.ModelSerializer):

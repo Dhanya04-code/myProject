@@ -11,13 +11,13 @@
     formdata.append('emp_id', EMP.emp_id());
     $.ajax({
       method: 'POST',
-      url: '/api/employee/create',
+      url: '/employee/api/create',
       data: formdata,
       contentType: false,
       processData: false,
     })
     .done( function (d, textStatus, jqXHR) {
-      window.location='/employees';
+      window.location='/employee';
     })
     .fail( function (jqXHR, textStatus, errorThrown) {
       alert(jqXHR.responseText);

@@ -11,7 +11,7 @@
   EMP.getEmployeesList = function(){
     $.ajax({
       method: 'GET',
-      url: '/api/employees/list',
+      url: '/employee/api/list',
     })
     .done( function (d, textStatus, jqXHR) {
       EMP.employees_list([]);
@@ -28,7 +28,7 @@
   EMP.getTaskDetails = function(){
     $.ajax({
       method: 'GET',
-      url: '/api/task/details/'+EMP.id(),
+      url: '/employee/api/task/details/'+EMP.id(),
     })
     .done( function (d, textStatus, jqXHR) {
       EMP.taskname(d.taskname);
@@ -54,8 +54,8 @@
     formdata.append('start_date', EMP.start_date());
     formdata.append('end_date', EMP.end_date());
     $.ajax({
-      method: 'PUT',
-      url: '/api/task/edit/'+EMP.id(),
+      method: 'POST',
+      url: '/employee/api/task/edit/'+EMP.id(),
       data: formdata,
       contentType: false,
       processData: false,
@@ -70,11 +70,11 @@
 
   EMP.deleteTask = function(data, e){
     $.ajax({
-      method: 'DELETE',
-      url: '/api/task/delete/'+EMP.id(),
+      method: 'POST',
+      url: '/employee/api/task/delete/'+EMP.id(),
     })
     .done( function (d, textStatus, jqXHR) {
-      window.location = '/tasks'
+      window.location = '/employee/tasks'
     })
     .fail( function (jqXHR, textStatus, errorThrown) {
       alert(jqXHR.responseText);

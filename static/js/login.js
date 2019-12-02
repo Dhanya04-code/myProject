@@ -15,7 +15,7 @@
       processData: false,
     })
     .done( function (d, textStatus, jqXHR) {
-      window.location = '/employees';
+      window.location = '/employee';
     })
     .fail( function (jqXHR, textStatus, errorThrown) {
       alert(jqXHR.responseText);

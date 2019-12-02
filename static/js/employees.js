@@ -5,7 +5,7 @@
   EMP.getEmployeesList = function(){
     $.ajax({
       method: 'GET',
-      url: '/api/employees/list',
+      url: '/employee/api/list',
     })
     .done( function (d, textStatus, jqXHR) {
       EMP.employees_list([]);

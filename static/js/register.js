@@ -19,7 +19,7 @@
       processData: false,
     })
     .done( function (d, textStatus, jqXHR) {
-      window.location='/user/login';
+      window.location='/login';
     })
     .fail( function (jqXHR, textStatus, errorThrown) {
       alert(jqXHR.responseText);

@@ -19,25 +19,85 @@ def employee_details(request, pk):
     return render(request,'employee-details.html')
 
 
-class employeeListAPIView(generics.ListAPIView):
-    queryset = Employee.objects.all()
-    serializer_class = EmployeeSerializer
+class employeeListAPIView(APIView):
+    permission_classes = (permissions.IsAuthenticated,)
+    def get(self, request):
+        employees = Employee.objects.filter(is_active=True)
+        serializer = EmployeeSerializer(employees,many=True)
+        return Response(serializer.data, status=200)
 
-class employeeDetailAPIView(generics.RetrieveAPIView):
-    queryset = Employee.objects.all()
-    serializer_class = EmployeeSerializer
 
-class employeeUpdateAPIView(generics.UpdateAPIView):
-    queryset = Employee.objects.all()
-    serializer_class = EmployeeUpdateSerializer
+class employeeDetailAPIView(APIView):
+    def get_object(self, pk):
+        try:
+            return Employee.objects.get(pk=pk, is_active=True)
+        except Employee.DoesNotExist:
+            raise Http404
 
-class employeeDestroyAPIView(generics.DestroyAPIView):
-    queryset = Employee.objects.all()
-    serializer_class = EmployeeSerializer
+    def get(self, request, pk):
+        employee = self.get_object(pk)
+        employee = EmployeeSerializer(employee)
+        return Response(employee.data)
 
-class employeeCreateAPIView(generics.CreateAPIView):
-    queryset = Employee.objects.all()
-    serializer_class = EmployeeSerializer
+
+class employeeUpdateAPIView(APIView):
+    def get_object(self, pk):
+        try:
+            return Employee.objects.get(pk=pk, is_active=True)
+        except Employee.DoesNotExist:
+            raise Http404
+
+    def post(self, request, pk):
+        employee = self.get_object(pk)
+        serializer = EmployeeUpdateSerializer(employee, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=200)
+        return Response(serializer.errors, status=404)
+
+
+class employeeDestroyAPIView(APIView):
+    def get_object(self, pk):
+        try:
+            return Employee.objects.get(pk=pk, is_active=True)
+        except Employee.DoesNotExist:
+            raise Http404
+
+    def post(self, request, pk):
+        employee = self.get_object(pk)
+        employee.is_active = False
+        employee.save()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+class employeeCreateAPIView(APIView):
+    def post(self, request):
+        serializer = EmployeeSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=200)
+        return Response(serializer.errors, status=400)
+
+
+# class employeeListAPIView(generics.ListAPIView):
+#     queryset = Employee.objects.all()
+#     serializer_class = EmployeeSerializer
+
+# class employeeDetailAPIView(generics.RetrieveAPIView):
+#     queryset = Employee.objects.all()
+#     serializer_class = EmployeeSerializer
+
+# class employeeUpdateAPIView(generics.UpdateAPIView):
+#     queryset = Employee.objects.all()
+#     serializer_class = EmployeeUpdateSerializer
+
+# class employeeDestroyAPIView(generics.DestroyAPIView):
+#     queryset = Employee.objects.all()
+#     serializer_class = EmployeeSerializer
+
+# class employeeCreateAPIView(generics.CreateAPIView):
+#     queryset = Employee.objects.all()
+#     serializer_class = EmployeeSerializer
 
 
 # class employeeList(APIView):
