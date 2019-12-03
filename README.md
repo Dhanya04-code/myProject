@@ -1,5 +1,5 @@
 Employee-WebApp 
-Employee web application provides an employer to signup and login inorder to manage his/her employees and their tasks. Employer can create, view, update and delete employees. And also create, view update and delete tasks. A task can be assigned to an employee while create or update. The system will automatically genearate a Task Sheet on every Fridays with details of tasks for that particular week.
+Employee web application provides an employer to signup and login inorder to manage his/her employees and their tasks. Employer can create, view, update and delete employees as well as tasks. A task can be assigned to an employee while create or update. The system will automatically genearate a Task Sheet on every Fridays with the details of tasks for that particular week.
 
 Setup project
 
