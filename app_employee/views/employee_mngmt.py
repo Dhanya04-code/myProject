@@ -71,7 +71,7 @@ class employeeDestroyAPIView(APIView):
 
 class employeeCreateAPIView(APIView):
     def post(self, request):
-        serializer = EmployeeSerializer(data=request.data)
+        serializer = EmployeeCreateSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=200)
