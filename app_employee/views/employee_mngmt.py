@@ -20,6 +20,7 @@ def employee_details(request, pk):
 
 
 class employeeListAPIView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
     def get(self, request):
         employees = Employee.objects.filter(is_active=True)
         serializer = EmployeeSerializer(employees,many=True)
@@ -27,6 +28,7 @@ class employeeListAPIView(APIView):
 
 
 class employeeDetailAPIView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
     def get_object(self, pk):
         try:
             return Employee.objects.get(pk=pk, is_active=True)
@@ -40,6 +42,7 @@ class employeeDetailAPIView(APIView):
 
 
 class employeeUpdateAPIView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
     def get_object(self, pk):
         try:
             return Employee.objects.get(pk=pk, is_active=True)
@@ -56,6 +59,7 @@ class employeeUpdateAPIView(APIView):
 
 
 class employeeDestroyAPIView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
     def get_object(self, pk):
         try:
             return Employee.objects.get(pk=pk, is_active=True)
@@ -70,6 +74,7 @@ class employeeDestroyAPIView(APIView):
 
 
 class employeeCreateAPIView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
     def post(self, request):
         serializer = EmployeeCreateSerializer(data=request.data)
         if serializer.is_valid():

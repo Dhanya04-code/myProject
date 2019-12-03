@@ -3,6 +3,7 @@ from django.http import HttpResponse, Http404
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status, permissions, generics
+from django.contrib.auth.decorators import login_required
 from app_employee.models import *
 from app_employee.serializers import *
 
@@ -11,6 +12,7 @@ def tasks_list(request):
     return render(request,'tasks.html')
 
 
+@login_required
 def task_create(request):
     return render(request,'task-create.html')
 
@@ -20,6 +22,7 @@ def task_details(request, pk):
 
 
 class taskListAPIView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
     def get(self, request):
         tasks = Task.objects.filter(is_active=True)
         serializer = TaskListSerializer(tasks, many=True)
@@ -27,6 +30,7 @@ class taskListAPIView(APIView):
 
 
 class taskDetailAPIView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
     def get_object(self, pk):
         try:
             return Task.objects.get(pk=pk, is_active=True)
@@ -40,6 +44,7 @@ class taskDetailAPIView(APIView):
 
 
 class taskUpdateAPIView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
     def get_object(self, pk):
         try:
             return Task.objects.get(pk=pk, is_active=True)
@@ -56,6 +61,7 @@ class taskUpdateAPIView(APIView):
 
 
 class taskDestroyAPIView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
     def get_object(self, pk):
         try:
             return Task.objects.get(pk=pk, is_active=True)
@@ -70,6 +76,7 @@ class taskDestroyAPIView(APIView):
 
 
 class taskCreateAPIView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
     def post(self, request):
         serializer = TaskSerializer(data=request.data)
         if serializer.is_valid():
