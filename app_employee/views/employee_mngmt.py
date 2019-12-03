@@ -20,7 +20,6 @@ def employee_details(request, pk):
 
 
 class employeeListAPIView(APIView):
-    permission_classes = (permissions.IsAuthenticated,)
     def get(self, request):
         employees = Employee.objects.filter(is_active=True)
         serializer = EmployeeSerializer(employees,many=True)

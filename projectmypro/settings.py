@@ -132,9 +132,9 @@ STATICFILES_DIRS = (
 
 REST_FRAMEWORK = {
     'DATETIME_FORMAT': "%d/%m/%Y",
-    'DEFAULT_PERMISSION_CLASSES': {
-        'rest_framework.permissions.IsAuthenticated'
-    }
+    # 'DEFAULT_PERMISSION_CLASSES': {
+    #     'rest_framework.permissions.IsAuthenticated'
+    # }
 }
 
 # CELERY SETTINGS
